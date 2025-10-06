@@ -1,0 +1,437 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Bais City National Science High School (BCNSHS)</title>
+  <meta name="description" content="Bais City National Science High School — STEM-focused science high school in Bais City. Official page prototype."/>
+  <style>
+    /* -------------------------
+       Root / Theme
+       -------------------------*/
+    :root{
+      --green-1:#0b6b2f;    /* deep BASCIAN green */
+      --green-2:#35b76a;    /* bright green */
+      --accent:#ffd54f;     /* warm accent */
+      --card:#ffffffcc;
+      --muted: #2a2a2a;
+      --glass: rgba(255,255,255,0.85);
+      --maxw:1200px;
+      --radius:14px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: "Segoe UI", Roboto, Arial, sans-serif;
+      background: linear-gradient(180deg,#eafdea 0%, #f7fff8 60%);
+      color:var(--muted);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+    }
+
+    /* -------------------------
+       Layout
+       -------------------------*/
+    .container{max-width:var(--maxw); margin:26px auto; padding:18px;}
+    header{
+      background: linear-gradient(90deg,var(--green-1), #137a3c);
+      color:white;
+      padding:18px;
+      border-radius:16px;
+      display:flex;
+      gap:18px;
+      align-items:center;
+      box-shadow:0 10px 30px rgba(5,50,20,0.12);
+      position:relative;
+      overflow:hidden;
+    }
+    /* decorative wave */
+    header::after{
+      content:"";
+      position:absolute;
+      right:-10%;
+      top:-10%;
+      width:60%;
+      height:260px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.06), transparent 20%),
+                  linear-gradient(180deg,rgba(255,255,255,0.04),transparent);
+      transform: rotate(10deg);
+      border-radius:50%;
+      pointer-events:none;
+    }
+
+    .logo{
+      width:110px; height:110px; flex:0 0 110px;
+      display:flex; align-items:center; justify-content:center;
+      border-radius:22px;
+      background: linear-gradient(180deg,#fff,#f2fff2);
+      padding:6px;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      transition:transform .45s cubic-bezier(.2,.9,.3,1);
+    }
+    .logo img{ width:100%; height:100%; object-fit:cover; border-radius:12px; display:block;}
+    .logo:hover{ transform: rotate(-6deg) scale(1.03) }
+
+    .site-title{ flex:1; text-align:left }
+    .site-title h1{ margin:0; font-size:1.6rem; letter-spacing:0.6px }
+    .site-title p{ margin:6px 0 0; opacity:0.95; font-size:0.95rem; }
+
+    .actions{ display:flex; gap:10px; align-items:center }
+    .btn{
+      display:inline-block; padding:10px 14px; border-radius:12px;
+      text-decoration:none; color:white; font-weight:700; font-size:0.95rem;
+      box-shadow:0 6px 18px rgba(0,0,0,0.12);
+      transition:transform .18s ease, box-shadow .18s ease;
+    }
+    .btn.fb{ background:#1877f2 }
+    .btn.cta{ background: linear-gradient(90deg,var(--green-2), #2f9b4f) }
+
+    .btn:hover{ transform:translateY(-4px); box-shadow:0 14px 30px rgba(0,0,0,0.18) }
+
+    /* -------------------------
+       Nav/hero
+       -------------------------*/
+    .hero{
+      margin-top:18px; display:grid; grid-template-columns: 1fr 360px; gap:18px; align-items:start;
+    }
+    @media (max-width:920px){ .hero{ grid-template-columns:1fr } .actions{display:none} }
+
+    .hero-card{
+      background: var(--card); padding:20px; border-radius:12px;
+      box-shadow:0 10px 30px rgba(10,30,10,0.06);
+      animation:fadeUp .8s ease both;
+    }
+    .hero-card h2{ margin-top:0; color:var(--green-1) }
+
+    .banner{
+      width:100%; height:260px; overflow:hidden; border-radius:10px;
+      display:block; position:relative; background:#e6f9ea;
+      box-shadow: inset 0 -50px 80px rgba(0,0,0,0.04);
+    }
+    .banner img{ width:100%; height:100%; object-fit:cover; display:block; transition:transform .8s ease }
+    .banner:hover img{ transform:scale(1.04) }
+
+    .quick-stats{ display:flex; gap:10px; margin-top:12px; flex-wrap:wrap }
+    .stat{ flex:1; min-width:120px; background:linear-gradient(180deg,#ffffff,#f0fff0); padding:10px; border-radius:10px; text-align:center; border:1px solid rgba(0,0,0,0.04) }
+    .stat strong{ display:block; font-size:1.1rem; color:var(--green-1) }
+
+    /* -------------------------
+       Main content grid
+       -------------------------*/
+    main{ margin-top:18px; display:grid; grid-template-columns: 2fr 360px; gap:18px; align-items:start; }
+    @media (max-width:1100px){ main{ grid-template-columns:1fr } }
+
+    .card{
+      background:var(--card); padding:18px; border-radius:12px; box-shadow:0 8px 20px rgba(10,30,20,0.06);
+      animation:fadeUp .7s ease both;
+    }
+
+    h3{ color:var(--green-1); margin-top:0 }
+    p.lead{ color:#2b3b2b; line-height:1.6 }
+
+    /* program grid */
+    .programs{ display:grid; grid-template-columns: repeat(2,1fr); gap:12px; margin-top:12px }
+    @media (max-width:720px){ .programs{ grid-template-columns:1fr } }
+
+    .program{
+      background: linear-gradient(180deg,#fff,#f7fff7);
+      border-radius:10px; padding:12px; border-left:6px solid var(--green-2);
+      transition: transform .25s cubic-bezier(.2,.9,.3,1), box-shadow .25s;
+    }
+    .program:hover{ transform: translateY(-6px); box-shadow:0 16px 40px rgba(20,80,30,0.12) }
+
+    /* teacher area */
+    .teachers-grid{ display:grid; grid-template-columns: repeat(3,1fr); gap:12px; margin-top:12px }
+    @media (max-width:900px){ .teachers-grid{ grid-template-columns: repeat(2,1fr) } }
+    @media (max-width:560px){ .teachers-grid{ grid-template-columns:1fr } }
+
+    .teacher{
+      display:flex; gap:12px; align-items:center; background:linear-gradient(180deg,#fff,#fbfff8); padding:10px; border-radius:10px;
+      border:1px solid rgba(0,0,0,0.04); transition:transform .18s, box-shadow .18s;
+    }
+    .teacher:hover{ transform:translateY(-6px); box-shadow:0 12px 30px rgba(0,0,0,0.08) }
+    .teacher img{ width:72px; height:72px; object-fit:cover; border-radius:10px; flex:0 0 72px; }
+
+    /* gallery carousel */
+    .carousel{ position:relative; overflow:hidden; border-radius:12px; }
+    .slides{ display:flex; transition: transform .7s cubic-bezier(.2,.9,.3,1) }
+    .slide{ min-width:100%; flex-shrink:0; }
+    .slide img{ width:100%; height:320px; object-fit:cover; display:block; }
+
+    .dots{ display:flex; gap:8px; justify-content:center; margin-top:10px }
+    .dot{ width:10px; height:10px; border-radius:50%; background:rgba(0,0,0,0.18); cursor:pointer; transition:transform .18s }
+    .dot.active{ background:var(--green-1); transform:scale(1.25) }
+
+    /* contact / map */
+    .contact-card a{ text-decoration:none; color:white }
+    .map{ border-radius:10px; overflow:hidden; margin-top:12px; height:220px }
+
+    /* footer */
+    footer{ margin-top:22px; padding:18px; border-radius:12px; background:linear-gradient(90deg,var(--green-1),#0b6b2f); color:white; text-align:center }
+
+    /* small helpers */
+    .muted{ color:#536b52 }
+    .kicker{ font-weight:700; color:var(--green-2) }
+    .tag{ display:inline-block; background:var(--green-2); color:#00310e; padding:4px 8px; border-radius:8px; font-weight:700; margin-right:6px; font-size:0.85rem }
+
+    /* animations */
+    @keyframes fadeUp { from{opacity:0; transform:translateY(10px)} to{opacity:1; transform:none} }
+  </style>
+</head>
+<body>
+  <div class="container">
+
+    <!-- HEADER -->
+    <header>
+      <div class="logo" aria-hidden="true">
+        <!-- logo.jpg must be in same folder -->
+        <img src="logo.jpg" alt="Bais City National Science High School logo">
+      </div>
+
+      <div class="site-title">
+        <h1>Bais City National Science High School</h1>
+        <p class="muted">Founded 1996 • Home of future scientists & innovators • Bais City, Negros Oriental</p>
+      </div>
+
+      <div class="actions" role="navigation" aria-label="Quick links">
+        <a class="btn cta" href="#about">About</a>
+        <a class="btn fb" href="https://www.facebook.com/BASCIAN" target="_blank" rel="noopener noreferrer">Visit Facebook</a>
+      </div>
+    </header>
+
+    <!-- HERO -->
+    <div class="hero">
+      <div class="hero-card">
+        <div class="banner" aria-hidden="true">
+          <img src="PIC.jpg" alt="BCNHS school banner / building">
+        </div>
+
+        <h2>Welcome to BCNSHS — BASCIAN Spirit: <span class="kicker">Green</span></h2>
+        <p class="lead">Bais City National Science High School focuses on a rigorous STEM-based curriculum, hands-on laboratories, student research, and values formation. We prepare learners for tertiary science & technology studies and active citizenship.</p>
+
+        <div class="quick-stats" aria-hidden="true">
+          <div class="stat"><small>Established</small><strong>1996</strong></div>
+          <div class="stat"><small>Grades</small><strong>7 — 12</strong></div>
+          <div class="stat"><small>School ID</small><strong>303216</strong></div>
+        </div>
+      </div>
+
+      <aside class="card contact-card" aria-labelledby="contact-title">
+        <h3 id="contact-title">Contact & Location</h3>
+        <p><strong>Address:</strong><br>Laurel St, Bais City, Negros Oriental</p>
+        <p><strong>Phone:</strong> (035-531 6352)</p>
+        <p><strong>Email:</strong>  baiscitynationalsciencehs@gmail.com 
+
+        <div class="map" aria-hidden="true">
+          <!-- Embedded Google Maps q param — replace with exact lat/long if desired -->
+          <iframe
+            src="https://www.google.com/maps?q=Bais+City+National+Science+High+School&output=embed"
+            style="width:100%; height:100%; border:0;" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+        </div>
+
+        <p style="margin-top:12px"><a class="btn fb" href="https://www.facebook.com/BASCIAN" target="_blank" rel="noopener noreferrer">Official Facebook Page</a></p>
+      </aside>
+    </div>
+
+    <!-- MAIN -->
+    <main>
+
+      <!-- LEFT: Details, programs, teachers, STEM info -->
+      <section class="card" aria-labelledby="about">
+        <h3 id="about">About & History</h3>
+        <p>Bais City National Science High School (BCNSHS) was established to provide an advanced science and mathematics curriculum to selected learners in Bais City and neighboring communities. Over the years the school has developed a culture of research, competitions, and environmental stewardship while remaining grounded in Filipino values.</p>
+
+        <h3>Mission (School)</h3>
+        <p>To provide a nurturing and challenging environment that fosters scientific inquiry, critical thinking, and values formation to produce competent and responsible citizens.</p>
+
+        <h3>Vision (School)</h3>
+        <p>To be a leading institution of science and technology education in the region — producing graduates who excel in STEM and serve their communities with integrity.</p>
+
+        <hr style="margin:18px 0; border:none; height:1px; background:linear-gradient(90deg,transparent,#e6f6e6,transparent)">
+
+        <h3>DepEd Mission & Vision</h3>
+        <p><strong>Mission:</strong> To protect and promote the right of every Filipino to quality, equitable, culture-based, and complete basic education where students learn in a child-friendly, gender-sensitive, safe, and motivating environment and teachers facilitate learning and constantly nurture every learner.</p>
+        <p><strong>Vision:</strong> We dream of Filipinos who passionately love their country and whose values and competencies enable them to realize their full potential and contribute meaningfully to building the nation.</p>
+
+        <h3>Core Values</h3>
+        <p class="muted">Maka-Diyos • Maka-tao • Makakalikasan • Makabansa</p>
+
+        <hr style="margin:18px 0; border:none; height:1px; background:linear-gradient(90deg,transparent,#e6f6e6,transparent)">
+
+        <h3 id="programs-overview">Academic Programs</h3>
+        <div class="programs" aria-hidden="true">
+          <div class="program">
+            <strong>Junior High School (Grades 7–10)</strong>
+            <p>Enriched curriculum in science & mathematics, laboratory work, ICT literacy, introductory research skills, and co-curricular activities to develop strong academic foundations.</p>
+          </div>
+
+          <div class="program">
+            <strong>Senior High School (Grades 11–12) — STEM Strand</strong>
+            <p>The Senior High Academic Track (STEM) focuses on advanced science and mathematics, engineering principles, research methods, and industry-relevant skills needed for careers in science, engineering, computing, and health sciences.</p>
+          </div>
+
+          <div class="program">
+            <strong>Research & Extension</strong>
+            <p>Students undertake guided research projects, mentorship with teachers, and participate in division/regional science fairs and community outreach projects.</p>
+          </div>
+
+          <div class="program">
+            <strong>Co-Curricular & Clubs</strong>
+            <p>Robotics Club, Science Club, Mathletes, Environmental Brigade, Student Government — these develop soft skills and leadership outside the classroom.</p>
+          </div>
+        </div>
+
+        <h3 style="margin-top:16px">What is STEM & Why it matters</h3>
+        <p><strong>STEM</strong> stands for <strong>Science, Technology, Engineering, and Mathematics</strong>. It is an educational approach that integrates these four disciplines to develop problem-solving, analytical thinking, innovation, and practical skills. <strong>Importance:</strong> STEM equips students with critical thinking, computational literacy, laboratory skills, and research abilities that are in high demand for 21st-century careers — from healthcare and engineering to data science and environmental research.</p>
+
+        <h4>STEM Program Features (sample activities)</h4>
+        <ul>
+          <li>Laboratory experiments & inquiry-based learning</li>
+          <li>Student-led research & capstone projects</li>
+          <li>Robotics and coding workshops</li>
+          <li>Fieldwork (environmental monitoring, community science)</li>
+          <li>Industry/college partnerships & guest lectures</li>
+        </ul>
+
+        <!-- placeholder image gallery for program items -->
+        <div style="display:flex; gap:8px; margin-top:12px; flex-wrap:wrap;">
+          <img src="PIC.jpg" alt="Lab / school" style="width:48%; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.08)">
+          <img src="TEACHERS.jpg" alt="Teachers" style="width:48%; border-radius:10px; box-shadow:0 8px 20px rgba(0,0,0,0.08)">
+        </div>
+      </section>
+
+      <!-- RIGHT: Teachers, Carousel, Quick links -->
+      <aside>
+
+        <!-- Teachers Card -->
+        <div class="card" aria-labelledby="teachers-title">
+          <h3 id="teachers-title">Faculty & Staff</h3>
+          <p class="muted">Our teachers are DepEd-qualified professionals who guide learners in science, math, and values-based education.</p>
+
+          <div class="teachers-grid" style="margin-top:30px;">
+            <!-- In lieu of individual photos, we show the group image as first card and placeholders for teachers.
+                 You can replace "TEACHERS.jpg" with individual teacher photos in future. -->
+            <div class="teacher">
+              <img src="TEACHERS.jpg" alt="Faculty group photo">
+              <div>
+                <strong>Faculty Group</strong><br>
+                <small class="muted">TEACHERS/FACULTY</small>
+              </div>
+            </div>
+
+            
+
+          </div>
+        </div>
+
+        <!-- Carousel -->
+<div id="demo" class="carousel slide" data-bs-ride="carousel">
+
+  <!-- Indicators/dots -->
+  <div class="carousel-indicators">
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="0" class="active"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="1"></button>
+    <button type="button" data-bs-target="#demo" data-bs-slide-to="2"></button>
+  </div>
+  
+  <!-- The slideshow/carousel -->
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="PIC.jpg" alt="pic" class="d-block" style="width:100%">
+    </div>
+    <div class="carousel-item">
+      <img src="PIC1.jpg" alt="pic1" class="d-block" style="width:100%">
+    </div>
+    <div class="carousel-item">
+      <img src="TEACHERS.jpg" alt="teachers" class="d-block" style="width:100%">
+    </div>
+  </div>
+  
+  <!-- Left and right controls/icons -->
+  <button class="carousel-control-prev" type="button" data-bs-target="#demo" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon"></span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#demo" data-bs-slide="next">
+    <span class="carousel-control-next-icon"></span>
+  </button>
+</div>
+
+
+        <!-- Quick Links -->
+        <div class="card" style="margin-top:15px;">
+          <h3>Quick Links</h3>
+          <p><a class="tag" href="#programs-overview">Programs</a>
+             <a class="tag" href="#contact">Contact</a>
+             <a class="tag" href="#teachers-title">Teachers</a>
+          </p>
+          <p style="margin-top:10px">
+            <a class="btn fb" href="https://www.facebook.com/BASCIAN" target="_blank" rel="noopener noreferrer">Visit our Facebook</a>
+          </p>
+        </div>
+
+      </aside>
+    </main>
+
+    <!-- FOOTER / CREDITS -->
+    <footer>
+      <div style="max-width:980px; margin:auto">
+        <strong>Bais City National Science High School</strong><br>
+        Maria Longa Drive, Bais City, Negros Oriental • School ID: 303216<br><br>
+        <small>Designed as a prototype page. Logos & images belong to Bais City National Science High School / DepEd. Replace placeholder contact details with official school data prior to publication.</small>
+        <p style="margin-top:8px; font-size:0.95rem;">© <span id="year"></span> Bais City National Science High School — All rights reserved.</p>
+      </div>
+    </footer>
+  </div>
+
+  <!-- -------------------------
+       Minimal JavaScript
+       - Carousel logic
+       - small helpers
+       ------------------------- -->
+  <script>
+    // set current year in footer
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Simple auto-rotating carousel
+    (function(){
+      const slidesEl = document.getElementById('slides');
+      const slides = slidesEl.children;
+      const dotsContainer = document.getElementById('dots');
+      let idx = 0;
+      const total = slides.length;
+
+      // create dots
+      for(let i=0;i<total;i++){
+        const d = document.createElement('div');
+        d.className = 'dot' + (i===0? ' active':'');
+        d.dataset.index = i;
+        d.addEventListener('click', ()=> goTo(parseInt(d.dataset.index)));
+        dotsContainer.appendChild(d);
+      }
+      const dots = dotsContainer.children;
+
+      function show(i){
+        slidesEl.style.transform = 'translateX('+(-i*100)+'%)';
+        for(let k=0;k<dots.length;k++) dots[k].classList.toggle('active', k===i);
+      }
+      function goTo(i){
+        idx = i % total;
+        if(idx<0) idx = total-1;
+        show(idx);
+      }
+      function next(){
+        idx = (idx+1) % total;
+        show(idx);
+      }
+
+      // auto-rotate every 4.5s
+      let timer = setInterval(next, 4500);
+
+      // pause on hover
+      const carousel = document.getElementById('carousel');
+      carousel.addEventListener('mouseenter', ()=> clearInterval(timer));
+      carousel.addEventListener('mouseleave', ()=> timer = setInterval(next, 4500));
+    })();
+  </script>
+</body>
+</html>
